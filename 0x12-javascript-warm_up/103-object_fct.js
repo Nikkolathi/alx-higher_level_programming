@@ -1,5 +1,5 @@
 #!/usr/bin/node
-//incr function
+// incr function
 const myObject = {
   type: 'object',
   value: 12
