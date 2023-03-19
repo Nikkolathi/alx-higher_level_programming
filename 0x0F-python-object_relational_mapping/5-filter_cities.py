@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 """
-    A script that lists all states from the database hbtn_0e_0_usa
-    Username, password and database names are given as user args
+    A script that lists all cities in a state from the database hbtn_04_0_usa
+    
 """
 
 
@@ -19,12 +19,17 @@ if __name__ == '__main__':
 
     cursor = db.cursor()
 
-    cursor.execute("SELECT * FROM states ORDER BY id ASC")
+    sql = """SELECT cities.name
+          FROM states
+          INNER JOIN cities ON states.id = cities.state_id
+          WHERE states.name = %s
+          ORDER BY cities.id ASC"""
+
+    cursor.execute(sql, (sys.argv[4],))
 
     data = cursor.fetchall()
 
-    for row in data:
-        print(row)
+    print(", ".join([city[0] for city in data]))
 
     cursor.close()
     db.close()

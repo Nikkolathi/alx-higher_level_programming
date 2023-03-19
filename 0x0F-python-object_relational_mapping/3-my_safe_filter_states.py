@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 """
-    A script that lists all states from the database hbtn_0e_0_usa
-    Username, password and database names are given as user args
+    a script that takes in arguments and displays all values in the states table of hbtn_0e_0_usa where name matches the argument. 
+    But this time, write one that is safe from MySQL injections!
 """
 
 
@@ -19,7 +19,11 @@ if __name__ == '__main__':
 
     cursor = db.cursor()
 
-    cursor.execute("SELECT * FROM states ORDER BY id ASC")
+    sql = """SELECT * FROM states
+          WHERE name = %s
+          ORDER BY id ASC"""
+
+    cursor.execute(sql, (sys.argv[4],))
 
     data = cursor.fetchall()
 
